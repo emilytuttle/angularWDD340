@@ -1,0 +1,9 @@
+.class-list-header {
+    background-color: rgb(235, 235, 235);
+    border: .5px solid rgb(204, 204, 204);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
