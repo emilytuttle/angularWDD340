@@ -1,10 +1,10 @@
 <div class="row">
     <div class="col-xs-12 class-list-header">
         <div class="col-xs-12">
-            <h3>R. Kent Jackson</h3>
+            <h3>{{ contact.name }}</h3>
         </div>
         <div>
-           <img>
+           <img [src]="contact.imageUrl" alt="{{ contact.name }}" class="img-responsive" style="max-height: 300px;">
             <span class="pull-right">
                 <button class="btn btn-primary button-btn" type="submit">Edit</button>
                     <button class="btn btn-danger" type="button">Delete</button>
@@ -14,7 +14,7 @@
        
     </div>
     <div class="col-xs-12">
-        <h4>Email:</h4>
-        <h4>Phone:</h4>
+        <h4>Email: {{ contact.email}} </h4>
+        <h4>Phone:{{contact.phone}}</h4>
     </div>
 </div>
