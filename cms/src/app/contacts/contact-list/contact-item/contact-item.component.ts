@@ -9,7 +9,6 @@ import { Contact } from '../../contact.model';
   styleUrl: './contact-item.component.css'
 })
 export class ContactItemComponent {
-
   @Input() contact: Contact;
   @Output() contactSelected = new EventEmitter<void>();
 
