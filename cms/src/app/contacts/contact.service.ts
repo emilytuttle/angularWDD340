@@ -8,6 +8,7 @@ import { EventEmitter } from '@angular/core';
 })
 export class ContactService {
   contactSelectedEvent = new EventEmitter<Contact>();
+  contactChangedEvent = new EventEmitter<Contact []>()
   contacts: Contact [] =[];
   constructor() {
      this.contacts = MOCKCONTACTS;
@@ -17,8 +18,20 @@ export class ContactService {
     return this.contacts.slice()
   }
 
-  getContact(id: string): Contact | undefined {
-    return this.contacts.find(contact => contact.id === id);
+  getContact(index: string){
+    return this.contacts[index]
   }
+
+  deleteContact(contact: Contact) {
+      if (!contact) {
+         return;
+      }
+      const pos = this.contacts.indexOf(contact);
+      if (pos < 0) {
+         return;
+      }
+      this.contacts.splice(pos, 1);
+      this.contactChangedEvent.emit(this.contacts.slice());
+    }
   
 }

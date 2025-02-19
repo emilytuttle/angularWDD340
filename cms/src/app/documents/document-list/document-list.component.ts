@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Document } from '../document.model';
 import { DocumentService } from '../document.service';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 
 @Component({
   selector: 'app-document-list',
@@ -9,16 +10,29 @@ import { DocumentService } from '../document.service';
   styleUrl: './document-list.component.css'
 })
 export class DocumentListComponent {
-    documents: Document[] = []
+    documents: Document[] = [];
+    document: Document;
+    id: number;
   
-    constructor(private documentService: DocumentService) {};
+    constructor(private documentService: DocumentService,
+                private router: Router,  
+                private route: ActivatedRoute
+    ) {};
+    
   
     ngOnInit() {
       this.documents = this.documentService.getDocuments();
+      
+      this.documentService.documentChangedEvent
+      .subscribe(
+        (documents) => {
+        this.documents = documents
+        }
+      )
     }
   
-    onDocumentSelected(document: Document) {
-      this.documentService.documentSelectedEvent.emit(document)
+    onNewDocument() {
+      this.router.navigate(['new'], {relativeTo: this.route})
     }
 
 }

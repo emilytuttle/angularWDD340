@@ -10,7 +10,8 @@ import { Contact } from '../../contact.model';
 })
 export class ContactItemComponent {
   @Input() contact: Contact;
-  @Output() contactSelected = new EventEmitter<void>();
+  @Input() index: number;
+  
 
   constructor() {}
 
@@ -18,7 +19,5 @@ export class ContactItemComponent {
 
   }
 
-  onSelected() {
-    this.contactSelected.emit()
-  }
+  
 }
