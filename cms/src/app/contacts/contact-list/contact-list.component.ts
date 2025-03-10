@@ -8,35 +8,43 @@ import { Subscription } from 'rxjs';
   selector: 'app-contact-list',
   standalone: false,
   templateUrl: './contact-list.component.html',
-  styleUrl: './contact-list.component.css'
+  styleUrls: ['./contact-list.component.css']
 })
-export class ContactListComponent implements OnInit, OnDestroy{
-  contacts: Contact[] = []
+export class ContactListComponent implements OnInit, OnDestroy {
+  contacts: Contact[] = [];
   contact: Contact;
-  id: number
-  private contChangeSub: Subscription
-  
-  constructor(private contactService: ContactService,
-              private router: Router,  
-               private route: ActivatedRoute
-  ) {};
+  id: number;
+  private contChangeSub: Subscription;
+  term: string = '';
+
+  constructor(
+    private contactService: ContactService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.contacts = this.contactService.getContacts();
-
-    this.contactService.contactChangedEvent
-        .subscribe(
-         (contacts) => {
-          this.contacts = contacts
-         }
-        )
+    this.contactService.contactChangedEvent.subscribe(
+      (contacts) => {
+        this.contacts = contacts;
+      }
+    );
   }
 
+
   onNewContact() {
-    this.router.navigate(['new'], {relativeTo: this.route})
+    this.router.navigate(['new'], { relativeTo: this.route });
+  }
+
+
+  search(value: string) {
+    this.term = value;
   }
 
   ngOnDestroy(): void {
-    this.contChangeSub.unsubscribe()
+    if (this.contChangeSub) {
+      this.contChangeSub.unsubscribe();
+    }
   }
 }

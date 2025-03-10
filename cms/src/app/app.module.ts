@@ -22,6 +22,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ContactStartComponent } from './contacts/contact-start/contact-start.component';
 import { ContactEditComponent } from './contacts/contact-edit/contact-edit.component';
 import { FormsModule } from '@angular/forms';
+import { ContactsFilterPipe } from './contacts-filter.pipe';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { FormsModule } from '@angular/forms';
     DocumentEditComponent,
     DocumentStartComponent,
     ContactStartComponent,
-    ContactEditComponent
+    ContactEditComponent,
+    ContactsFilterPipe
   ],
   imports: [
     BrowserModule,
