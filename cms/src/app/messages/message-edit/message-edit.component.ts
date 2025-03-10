@@ -23,7 +23,7 @@ export class MessageEditComponent implements OnInit{
     event.preventDefault()
     const mSubject = this.subjectInputRef.nativeElement.value
     const mMessage = this.messageInputRef.nativeElement.value
-    const newMessage = new Message('11', mSubject, mMessage, '1')
+    const newMessage = new Message('11', mSubject, mMessage, 1)
     this.mService.addMessage(newMessage)
   }
 

@@ -21,6 +21,7 @@ import { DocumentStartComponent } from './documents/document-start/document-star
 import { AppRoutingModule } from './app-routing.module';
 import { ContactStartComponent } from './contacts/contact-start/contact-start.component';
 import { ContactEditComponent } from './contacts/contact-edit/contact-edit.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { ContactEditComponent } from './contacts/contact-edit/contact-edit.compo
   imports: [
     BrowserModule,
     DropdownDirective,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

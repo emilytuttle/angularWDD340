@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Contact } from './contact.model';
 import { MOCKCONTACTS } from './MOCKCONTACTS';
 import { EventEmitter } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ export class ContactService {
   contactChangedEvent = new EventEmitter<Contact []>()
   contacts: Contact [] =[];
   maxContactId: number;
+  contactsListClone: Contact[]
   constructor() {
      this.contacts = MOCKCONTACTS;
   }
@@ -19,8 +21,9 @@ export class ContactService {
     return this.contacts.slice()
   }
 
-  getContact(index: string){
-    return this.contacts[index]
+  getContact(index: number): Observable<Contact>{
+    const contact = this.contacts[index]
+    return of(contact)
   }
 
   deleteContact(contact: Contact) {
@@ -48,31 +51,42 @@ export class ContactService {
         return maxId;
       }
     
-      addContact(newContact: Contact) {
-        if (newContact == undefined || newContact == null) {
-          return
-        }
-        this.maxContactId++
-        newContact.id = this.maxContactId
-        this.contacts.push(newContact)
-        let contactsListClone = this.contacts.slice()
-        this.contactChangedEvent.next(contactsListClone)
+      addContact(newContact: Contact): Observable<void> {
+        return new Observable<void>((observer) => {
+              if (newContact == undefined || newContact == null) {
+                observer.error('Invalid Contact');
+                return;
+              }
+              this.maxContactId++;
+              newContact.id = this.maxContactId;
+              this.contacts.push(newContact);
+              this.contactsListClone = this.contacts.slice();
+              this.contactChangedEvent.next(this.contactsListClone);
+              observer.next(); // Signals completion
+              observer.complete();
+            });
       }
     
-      updateContact(originalContact: Contact, newContact: Contact) {
-        if (originalContact == undefined || originalContact == null || newContact == undefined || newContact == null) {
-          return
-        } 
-            
-        const pos = this.contacts.indexOf(originalContact)
-        if (pos < 0) {
-          return
-        } 
-    
-        newContact.id = originalContact.id
-        this.contacts[pos] = newContact
-        let contactsListClone = this.contacts = this.contacts.slice()
-        this.contactChangedEvent.next(contactsListClone)
-    } 
+      updateContact(originalContact: Contact, newContact: Contact): Observable<void> {
+          return new Observable<void>((observer) => {
+            if (originalContact == undefined || originalContact == null || newContact == undefined || newContact == null) {
+              observer.error('Invalid contact');
+              return;
+            }
+        
+            const pos = this.contacts.indexOf(originalContact);
+            if (pos < 0) {
+              observer.error('Contact not found');
+              return;
+            }
+        
+            newContact.id = originalContact.id;
+            this.contacts[pos] = newContact;
+            this.contactsListClone = this.contacts.slice();
+            this.contactChangedEvent.next(this.contactsListClone);
+            observer.next(); // Signals completion
+            observer.complete();
+          });
+        }
   
 }

@@ -32,7 +32,10 @@ export class DocumentDetailComponent implements OnInit{
     .subscribe(
      (params: Params) => {
       this.id = params['id']
-      this.document = this.documentService.getDocument(this.id.toString())
+      this.documentService.getDocument(this.id).subscribe((document: Document) => {
+        this.document = document; // Assign the result after subscribing
+      });
+      
      }
     )
   }
@@ -42,8 +45,8 @@ export class DocumentDetailComponent implements OnInit{
   }
 
   onView() {
-    if (this.document.url) {
-      this.nativeWindow.open(this.document.url)
+    if (this.document.docUrl) {
+      this.nativeWindow.open(this.document.docUrl)
     }
   }
 

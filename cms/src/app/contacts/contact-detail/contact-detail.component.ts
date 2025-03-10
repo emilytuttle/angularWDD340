@@ -24,10 +24,15 @@ export class ContactDetailComponent implements OnInit{
         .subscribe(
          (params: Params) => {
           this.id = params['id']
-          this.contact = this.contactService.getContact(this.id.toString())
+          this.contactService.getContact(this.id).subscribe((contact: Contact) => {
+            this.contact = contact;
+          })
          }
         )
+        
   }
+
+
 
   onEditContact() {
     this.router.navigate(['edit'], {relativeTo: this.route})
