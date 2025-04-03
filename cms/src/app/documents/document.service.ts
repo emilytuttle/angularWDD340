@@ -27,7 +27,7 @@ export class DocumentService {
 
   getDocument(index: number): Observable<Document>{
     const document = this.documents[index];
-    return of(document);
+    return of(document); 
   }
   
 
